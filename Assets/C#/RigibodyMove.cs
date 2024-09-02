@@ -6,12 +6,19 @@ public class RigibodyMove : MonoBehaviour
 {
     private float MoveSpeed = 2f;
     private float jumpcd;
+
+    // Add a new public field to control whether character movement is enabled
+    public bool enableMovement = true;
+
     void Start()
     {
 
     }
     void Update()
     {
+        if (!enableMovement)
+            return;
+
         if (jumpcd < 2)
         {
             jumpcd += Time.deltaTime;

@@ -21,10 +21,17 @@ public class MouseLook1 : MonoBehaviour {
 
 	float rotationY = 0F;
 
-	void Update ()
-	{
+    // Add a public field to control whether mouse input is enabled.
+    public bool enableMouseInput = true;
 
-		if (axes == RotationAxes.MouseXAndY)
+    void Update ()
+	{
+        // Only process mouse input when enableMouseInput is set to true.
+        if (!enableMouseInput)
+            return;
+
+		
+        if (axes == RotationAxes.MouseXAndY)
 		{
 			//设置X轴和Y轴都能转动
 			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
