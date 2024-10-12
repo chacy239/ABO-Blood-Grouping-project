@@ -21,39 +21,36 @@ public class MouseLook1 : MonoBehaviour {
 
 	float rotationY = 0F;
 
-    // Add a public field to control whether mouse input is enabled.
-    public bool enableMouseInput = true;
-
-    void Update ()
+	void Update ()
 	{
-        // Only process mouse input when enableMouseInput is set to true.
-        if (!enableMouseInput)
-            return;
+		if (Input.GetMouseButton(1))
+		{
+            if (axes == RotationAxes.MouseXAndY)
+            {
+                //设置X轴和Y轴都能转动
+                float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+
+                rotationY += Input.GetAxis("Mouse Y") * sensitivityY;//上下左右转动的速度
+                rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);//上下左右转动的数值
+
+                transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);//上下左右转动
+            }
+            else if (axes == RotationAxes.MouseX)
+            {
+                //只能X轴转动
+                transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
+            }
+            else
+            {
+                //只能Y轴转动
+                rotationY += Input.GetAxis("Mouse Y") * sensitivityY;////上下转动的速度
+                rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);//上下转动的数值
+
+                transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);//上下转动
+            }
+        }
 
 		
-        if (axes == RotationAxes.MouseXAndY)
-		{
-			//设置X轴和Y轴都能转动
-			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
-			
-			rotationY += Input.GetAxis("Mouse Y") * sensitivityY;//上下左右转动的速度
-			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);//上下左右转动的数值
-
-			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);//上下左右转动
-		}
-		else if (axes == RotationAxes.MouseX)
-		{
-			//只能X轴转动
-			transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
-		}
-		else
-		{
-			//只能Y轴转动
-			rotationY += Input.GetAxis("Mouse Y") * sensitivityY;////上下转动的速度
-			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);//上下转动的数值
-
-			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);//上下转动
-		}
 	}
 	
 	void Start ()
