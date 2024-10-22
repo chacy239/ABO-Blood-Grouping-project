@@ -20,15 +20,19 @@ public class MainControl_2 : MonoBehaviour
     public GameObject shiji1,shiji2,shiji3;
     public GameObject ningjiaokaUI;//Äý½º¿¨UI
 
+    private List<SaveState> savePoints = new List<SaveState>(); // Save point list
+    private int currentSaveIndex = -1; // Index of the current save point
+
     void Start()
     {
-        
+
     }
 
     public void ATip(int times,string str)
     {
         Invoke("Asettip", times);
         tipstr = str;
+        SaveProgress();
     }
     public void Asettip()
     {
@@ -138,6 +142,70 @@ public class MainControl_2 : MonoBehaviour
             }
         }
 
-
     }
+
+    // Save the current progress, including object position, status, etc.
+    public void SaveProgress()
+        {
+            SaveState currentState = new SaveState
+            {
+                tipText = tiptext.text, // Save the tip text
+                yiyeqi1Position = yiyeqi1.transform.position, // Save the position of yiyeqi1
+                yiyeqi2Position = yiyeqi2.transform.position, // Save the position of yiyeqi2
+                yiyeqi1Active = yiyeqi1.activeSelf, // Save the activation status of yiyeqi1
+                yiyeqi2Active = yiyeqi2.activeSelf, // Save the activation status of yiyeqi2
+                lixinjiUIActive = lixinjiUI.activeSelf, // Save the display state of the centrifuge UI
+                lixinimaFillAmount = lixinima.fillAmount // Save the centrifuge progress bar
+            };
+
+            // Remove future storage points to ensure continuity of storage points
+            if (currentSaveIndex < savePoints.Count - 1)
+            {
+                savePoints.RemoveRange(currentSaveIndex + 1, savePoints.Count - (currentSaveIndex + 1));
+            }
+            savePoints.Add(currentState); // Add the current state to the storage point list
+            currentSaveIndex++;
+            Debug.Log("Save point has been saved: ");
+        }
+
+        // Return to the previous storage point
+        public void ReturnToPreviousSavePoint()
+        {
+            if (currentSaveIndex > 0)
+            {
+                currentSaveIndex--;
+                SaveState previousState = savePoints[currentSaveIndex];
+
+                //Restore prompt text
+                tiptext.text = previousState.tipText;
+
+                // Restore the location and status of yiyeqi1 and yiyeqi2
+                yiyeqi1.transform.position = previousState.yiyeqi1Position;
+                yiyeqi1.SetActive(previousState.yiyeqi1Active);
+                yiyeqi2.transform.position = previousState.yiyeqi2Position;
+                yiyeqi2.SetActive(previousState.yiyeqi2Active);
+
+                // Restore the state of the centrifuge UI
+                lixinjiUI.SetActive(previousState.lixinjiUIActive);
+                lixinima.fillAmount = previousState.lixinimaFillAmount;
+
+                Debug.Log("Return to the previous save point " );
+            }
+            else
+            {
+                Debug.Log("This is the first save point.");
+            }
+        }
+    }
+
+[System.Serializable]
+public class SaveState
+{
+    public string tipText; // stored tip text
+    public Vector3 yiyeqi1Position; // Save the position of yiyeqi1
+    public Vector3 yiyeqi2Position; // Save the position of yiyeqi2
+    public bool yiyeqi1Active; // Save the activation status of yiyeqi1
+    public bool yiyeqi2Active; // Save the activation status of yiyeqi2
+    public bool lixinjiUIActive; // Save the display status of the centrifuge UI
+    public float lixinimaFillAmount; // Centrifuge progress bar
 }
