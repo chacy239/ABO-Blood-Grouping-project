@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{000B91C3-19CD-7262-617F-1BE95C14228A}</ProjectGuid>
+    <ProjectGuid>{C15D7308-7E17-2459-7D04-AE220C87988F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -80,8 +80,8 @@
     <Compile Include="Assets\C#\TextToggleController.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\UI\PresetSelector.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Helpers\CompoundObjectController.cs" />
-    <Compile Include="Assets\C#\ReturnButtonController.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Advanced\Deprecated\HighlighterBase.cs" />
+    <Compile Include="Assets\C#\UserDataManager.cs" />
     <Compile Include="Assets\C#\MouseLook1.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Advanced\HighlighterFilterAdvanced.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\UI\UIManager.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\UI\SceneLoader.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Advanced\Deprecated\HighlighterSpectrum.cs" />
     <Compile Include="Assets\C#\MainControl_1.cs" />
+    <Compile Include="Assets\C#\Ningjiaoka.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\UI\UI.cs" />
-    <Compile Include="Assets\C#\randomResult.cs" />
     <Compile Include="Assets\C#\MainControl.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Service\RaycastController.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Helpers\GameObjectToggle.cs" />
@@ -1035,7 +1035,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{73297550-3F7D-9DAB-D522-BAB3A8586314}</Project>
+      <Project>{663C7D20-98FC-16C3-9E1E-F138F328FA19}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

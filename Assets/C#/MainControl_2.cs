@@ -1,32 +1,104 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainControl_2 : MonoBehaviour
 {
-    public Text tiptext;//¶¥²¿ÌáÊ¾ÎÄ×Ö
-    private string tipstr;//ÌáÊ¾µÄÎÄ×ÖÄÚÈİ
+    public Text tiptext;//é¡¶éƒ¨æç¤ºæ–‡å­—
+    private string tipstr;//æç¤ºçš„æ–‡å­—å†…å®¹
 
-    public GameObject kedu1;//ÊäÈë¿Ì¶ÈUI1
-    public GameObject kedu2;//ÊäÈë¿Ì¶ÈUI2
+    public GameObject kedu1;//è¾“å…¥åˆ»åº¦UI1
+    public GameObject kedu2;//è¾“å…¥åˆ»åº¦UI2
 
 
     public GameObject yiyeqi1, yiyeqi2;
 
-    public GameObject lixinjiUI;//ÀëĞÄ»úÉèÖÃUI
+    public GameObject lixinjiUI;//ç¦»å¿ƒæœºè®¾ç½®UI
 
-    public Image lixinima;//ÀëĞÄ½ø¶ÈÌõ
+    public Image lixinima;//ç¦»å¿ƒè¿›åº¦æ¡
     public GameObject shiji1,shiji2,shiji3;
-    public GameObject ningjiaokaUI;//Äı½º¿¨UI
+    public GameObject ningjiaokaUI;//å‡èƒ¶å¡UI
+
+    public Animator lixinjiani;
+    public GameObject Arrow1, Arrow2, Arrow3, Arrow4;//ç§»æ¶²å™¨çš„æç¤º
+
+    public Button returnButton; // button to return to the previous step
+    public Button resultButton; // button that displays the input box
+    public Button saveInterpretationButton; // Save the button explaining the input
+    public InputField scaleQuantity1Input; 
+    public InputField scaleQuantity2Input; 
+    public InputField appropriateSpeedInput; 
+    public InputField appropriateTimeInput; 
+    public InputField interpretationInput; // Input box for entering experimental explanations
 
     private List<SaveState> savePoints = new List<SaveState>(); // Save point list
     private int currentSaveIndex = -1; // Index of the current save point
 
+    private string csvFilePath; // Path to save CSV file
+
     void Start()
     {
+ 
+        
 
+        //Set file path
+        csvFilePath = Application.persistentDataPath + "/ExperimentResult.csv";
+
+        // Check if the CSV file exists, if not create it
+        if (!File.Exists(csvFilePath))
+        {
+            CreateCSVFile();
+        }
+
+        //Set button click event
+        saveInterpretationButton.onClick.AddListener(SaveExperimentData);
     }
+
+
+    private void CreateCSVFile()
+    {
+        using (StreamWriter writer = new StreamWriter(csvFilePath, false))
+        {
+            writer.WriteLine("Full Name,Date of Birth,Lab Number,Scale Quantity 1,Scale Quantity 2,Appropriate Speed,Appropriate Time,Interpretation");
+        }
+    }
+
+
+
+    public void SaveExperimentData()
+    {
+        // Get personal information (from UserDataManager)
+        string fullName = UserDataManager.instance.GetFullName();
+        string dateOfBirth = UserDataManager.instance.GetDateOfBirth();
+        string labNumber = UserDataManager.instance.GetLabNumber();
+
+        // Get experimental data entered by the user
+        string scaleQuantity1 = scaleQuantity1Input.text;
+        string scaleQuantity2 = scaleQuantity2Input.text;
+        string appropriateSpeed = appropriateSpeedInput.text;
+        string appropriateTime = appropriateTimeInput.text;
+        string interpretation = interpretationInput.text;
+
+        Debug.Log($"Full Name: {fullName}, Date of Birth: {dateOfBirth}, Lab Number: {labNumber}");
+        Debug.Log($"Scale Quantity 1: {scaleQuantity1}, Scale Quantity 2: {scaleQuantity2}");
+        Debug.Log($"Appropriate Speed: {appropriateSpeed}, Appropriate Time: {appropriateTime}, Interpretation: {interpretation}");
+
+
+        // Write all data to a CSV file
+        using (StreamWriter writer = new StreamWriter(csvFilePath, true))
+        {
+            writer.WriteLine($"{fullName},{dateOfBirth},{labNumber},{scaleQuantity1},{scaleQuantity2},{appropriateSpeed},{appropriateTime},{interpretation}");
+        }
+
+        Debug.Log("The experiment results have been saved to the CSV file");
+
+        //Hide the explanation input field
+        interpretationInput.gameObject.SetActive(false);
+        saveInterpretationButton.gameObject.SetActive(false);
+    }
+
 
     public void ATip(int times,string str)
     {
@@ -41,7 +113,7 @@ public class MainControl_2 : MonoBehaviour
 
     public void Akedu1()
     {
-        //ÊäÈë¿Ì¶È1
+        //è¾“å…¥åˆ»åº¦1
         yiyeqi1.GetComponent<Animator>().enabled = true;
         yiyeqi1.GetComponent<BoxCollider>().enabled = false;
         kedu1.SetActive(false);
@@ -50,14 +122,15 @@ public class MainControl_2 : MonoBehaviour
     }
     public void Ashowkedu2()
     {
-        //ÏÔÊ¾¿Ì¶È2µÄÄ£ĞÍ
+        //æ˜¾ç¤ºåˆ»åº¦2çš„æ¨¡å‹
+        Arrow2.SetActive(true);
         yiyeqi1.SetActive(false);
         yiyeqi2.SetActive(true);
     }
 
     public void Akedu2()
     {
-        //ÊäÈë¿Ì¶È2
+        //è¾“å…¥åˆ»åº¦2
         yiyeqi2.GetComponent<Animator>().enabled = true;
         yiyeqi2.GetComponent<BoxCollider>().enabled = false;
         kedu2.SetActive(false);
@@ -72,20 +145,44 @@ public class MainControl_2 : MonoBehaviour
     }
     public void Alixinji()
     {
-        //ÉèÖÃÀëĞÄ»ú
+        //è®¾ç½®ç¦»å¿ƒæœº
         lixinjiUI.SetActive(true);
+        lixinjiani.SetBool("close", true);
     }
     public void Alixinbtn()
     {
-        //²Ù×÷ÀëĞÄ»ú
+        //æ“ä½œç¦»å¿ƒæœº
         lixinjiUI.SetActive(false);
         lixinima.transform.parent.gameObject.SetActive(true);
 
     }
     public void AningjiaokaUI()
     {
-        //ÏÔÊ¾Äı½º¿¨UI
+        
+    }
 
+    public void Alixinend()
+    {
+        //ç¦»å¿ƒç»“æŸï¼Œå–å‡ºå‡èƒ¶å¡
+        shiji3.SetActive(true);
+    }
+
+    public void AArrow1()
+    {
+        //æ˜¾ç¤ºç§»æ¶²å™¨æç¤º
+        Arrow1.SetActive(true);
+
+    }
+
+    public void AArrow3()
+    {
+        Arrow3.SetActive(true);
+
+    }
+
+    public void AArrow4()
+    {
+        Arrow4.SetActive(true);
     }
     void Update()
     {
@@ -94,7 +191,9 @@ public class MainControl_2 : MonoBehaviour
             lixinima.fillAmount += Time.deltaTime / 3;
             if (lixinima.fillAmount >= 1)
             {
-                shiji3.SetActive(true);
+                shiji2.SetActive(false);
+                lixinjiani.SetBool("close", false);
+                Invoke("Alixinend", 1);
                 lixinima.transform.parent.gameObject.SetActive(false);
             }
         }
@@ -104,7 +203,7 @@ public class MainControl_2 : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //Ray ray01 = new Ray(Camera.main.transform.position, Vector3.forward);
             RaycastHit hit;
-            //?§Ø?????????????
+            //?Ğ¶?????????????
             bool isCollider = Physics.Raycast(ray, out hit);
             //bool isCollider01= Physics.Raycast(Camera.main.transform.position, Vector3.forward, 
             //    10, LayerMask.GetMask("UI", "Enemy", "Player"));
@@ -114,30 +213,35 @@ public class MainControl_2 : MonoBehaviour
 
                 if (hit.collider.gameObject.name == "Shiji")
                 {
-                    //Ëº¿ªÄı½º
+                    //æ’•å¼€å‡èƒ¶
                     hit.collider.gameObject.GetComponent<Animator>().enabled = true;
                     ATip(5, "Add reagent red blood cells to each column of the gel card.");
+                    Invoke("AArrow1", 5);
                 }
                 if (hit.collider.gameObject.name == "yiyeqi1")
                 {
-                    //oÑ§Éú½«Í¨¹ıÍÏ·Å²Ù×÷£¨Drag-and-Drop£©½«ÊÔ¼ÁºìÏ¸°û£¨Reagent Red Cells£¬º¬ÓĞÒÑÖª¿¹Ô­µÄºìÏ¸°û£¬Red Cells with Known Antigens£©¼ÓÈëÄı½º¿¨µÄ¸÷¸öÖùÖĞ¡£
+                    //oå­¦ç”Ÿå°†é€šè¿‡æ‹–æ”¾æ“ä½œï¼ˆDrag-and-Dropï¼‰å°†è¯•å‰‚çº¢ç»†èƒï¼ˆReagent Red Cellsï¼Œå«æœ‰å·²çŸ¥æŠ—åŸçš„çº¢ç»†èƒï¼ŒRed Cells with Known Antigensï¼‰åŠ å…¥å‡èƒ¶å¡çš„å„ä¸ªæŸ±ä¸­ã€‚
                     kedu1.SetActive(true);
+                    Arrow1.SetActive(false);
                 }
                 if (hit.collider.gameObject.name == "yiyeqi2")
                 {
-                    //½«ÖÆ±¸ºÃµÄºìÏ¸°ûĞü¸¡ÒººÍÑª½¬£¨Plasma£©·Ö±ğ¼ÓÈëµ½Äı½º¿¨µÄÏàÓ¦ÖùÖĞ
+                    //å°†åˆ¶å¤‡å¥½çš„çº¢ç»†èƒæ‚¬æµ®æ¶²å’Œè¡€æµ†ï¼ˆPlasmaï¼‰åˆ†åˆ«åŠ å…¥åˆ°å‡èƒ¶å¡çš„ç›¸åº”æŸ±ä¸­
                     kedu2.SetActive(true);
+                    Arrow2.SetActive(false);
                 }
                 if (hit.collider.gameObject.name == "Shiji2")
                 {
-                    //·ÅÖÃÄı½ºµ½ÀëĞÄ»ú
+                    //æ”¾ç½®å‡èƒ¶åˆ°ç¦»å¿ƒæœº
                     hit.collider.gameObject.GetComponent<Animator>().enabled = true;
                     Invoke("Alixinji", 5);
                 }
                 if (hit.collider.gameObject.name == "Shiji3")
                 {
-                    //·ÅÖÃÄı½ºµ½ÀëĞÄ»ú
+                    //æ˜¾ç¤ºå‡èƒ¶å¡ç»“æœ
                     ningjiaokaUI.SetActive(true);
+                    gameObject.GetComponent<RigibodyMove>().enabled = false;
+                    gameObject.GetComponent<MouseLook1>().enabled = false;
                 }
             }
         }
@@ -209,3 +313,4 @@ public class SaveState
     public bool lixinjiUIActive; // Save the display status of the centrifuge UI
     public float lixinimaFillAmount; // Centrifuge progress bar
 }
+
