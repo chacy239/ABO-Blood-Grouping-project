@@ -6,12 +6,22 @@ public class RigibodyMove : MonoBehaviour
 {
     private float MoveSpeed = 1.5f;
     private float jumpcd;
+    private Camera Cam;
     void Start()
     {
-
+        Cam=Camera.main;
     }
     void Update()
     {
+
+        if (Input.GetMouseButton(2) && Cam.fieldOfView>25)
+        {
+            Cam.fieldOfView -= 1f;
+        }
+        if (!Input.GetMouseButton(2) && Cam.fieldOfView < 50)
+        {
+            Cam.fieldOfView += 1f;
+        }
         if (jumpcd < 2)
         {
             jumpcd += Time.deltaTime;

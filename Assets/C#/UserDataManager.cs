@@ -9,6 +9,7 @@ public class UserDataManager : MonoBehaviour
     public string fullName;
     public string dateOfBirth;
     public string labNumber;
+    private int cycleCount = 0;
 
     void Awake()
     {
@@ -24,16 +25,19 @@ public class UserDataManager : MonoBehaviour
         }
     }
 
+
     //Save user information
-    public void SaveUserData(string name, string dob, string labNum)
+    public void SaveUserData(string name, string dob, string labNum, int count)
     {
         fullName = name;
         dateOfBirth = dob;
         labNumber = labNum;
+        cycleCount = count;
     }
 
     // Get user information
     public string GetFullName() { return fullName; }
     public string GetDateOfBirth() { return dateOfBirth; }
     public string GetLabNumber() { return labNumber; }
+    public int GetCycleCount() { return cycleCount; }
 }
