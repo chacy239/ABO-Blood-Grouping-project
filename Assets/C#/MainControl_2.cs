@@ -156,11 +156,17 @@ public class MainControl_2 : MonoBehaviour
         shiji1.SetActive(false);
         shiji2.SetActive(true);
     }
+
+
+    /// <summary>
+    /// // Game Ends Here ..............
+    /// </summary>
     public void Alixinji()
     {
         //…Ë÷√¿Î–ƒª˙
         lixinjiUI.SetActive(true);
         lixinjiani.SetBool("close", true);
+        // ///////////////////////////////////////// show the final result here ...
     }
     public void Alixinbtn()
     {
