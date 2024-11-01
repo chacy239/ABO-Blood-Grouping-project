@@ -55,6 +55,7 @@
     <UnityVersion>2022.3.50f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.50f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.50f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -74,6 +75,7 @@
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Service\CameraFlyController.cs" />
     <Compile Include="Assets\C#\TextToggleController1.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Advanced\HighlighterRevealerManager.cs" />
+    <Compile Include="Assets\C#\TimeKeeper.cs" />
     <Compile Include="Assets\Hospital Laboratory Interior\Scripts\RotateMoveCamera.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Helpers\RotationController.cs" />
     <Compile Include="Assets\HighlightingSystemDemo\Scripts\Advanced\HighlighterToggle.cs" />

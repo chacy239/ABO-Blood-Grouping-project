@@ -9,6 +9,8 @@ public class SaveTextExample : MonoBehaviour
     public InputField input1, input2;
     public void CreateAndSaveTextFile(string fileName, string content)
     {
+        // ...................................................................................................
+
         string path = Path.Combine(System.Environment.CurrentDirectory, fileName);
         File.WriteAllText(path, content);
         Debug.Log("文件保存成功：" + path);
@@ -22,6 +24,10 @@ public class SaveTextExample : MonoBehaviour
        // string folderPath = "C:/MyTextFiles"; // 文件夹路径
         string fileName = input1.text+ ".txt"; // 文件名
         string textContent = input2.text; // 文件内容
+
+
+        TimeKeeper timewatch = GameObject.Find("TimeClaculator").GetComponent<TimeKeeper>();
+
 
         // 确保文件夹存在
         if (!Directory.Exists(System.Environment.CurrentDirectory))

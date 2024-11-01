@@ -52,6 +52,25 @@ public class MainControl_2 : MonoBehaviour
 
     public GameObject shiguanye1,shiguanye2,shiguanye3,shiguanye4;//试管里的液体
 
+    public GameObject finalResPanel;
+    public GameObject fileEntryPanel;
+    // data entry poins
+
+    public Text studentName;
+    public Text stuID;
+    public Text time;
+
+    public Text patientName;
+    public Text patientDOB;
+    public Text fileNumb;
+    public Text ogBloodGrp;
+
+    public Text stuFileNumb;
+    public Text stuInput;
+
+    public Ningjiaoka bldGrpScrpt;
+
+
     private int arrownum=0;
     void Start()
     {
@@ -88,6 +107,32 @@ public class MainControl_2 : MonoBehaviour
 
     public void SaveExperimentData()
     {
+
+
+        //    =========================================================================================
+        fileEntryPanel.SetActive(false);
+        finalResPanel.SetActive(true);
+        for (int i = 0; i < finalResPanel.transform.childCount; i++)
+        {
+            finalResPanel.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        
+        studentName.text = PlayerPrefs.GetString("Name");
+        stuID.text = PlayerPrefs.GetString("Id");
+        time.text = GameObject.FindFirstObjectByType<TimeKeeper>().UpdateTimerText();
+
+        patientName.text = UserDataManager.instance.GetFullName();
+        patientDOB.text = UserDataManager.instance.GetDateOfBirth();
+        fileNumb.text = UserDataManager.instance.GetLabNumber();
+        ogBloodGrp.text = bldGrpScrpt.bloodGrp;
+
+        stuFileNumb.text = bldGrpScrpt.fileNumb;
+        stuInput.text = bldGrpScrpt.studentAns;
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         // Get personal information (from UserDataManager)
         string fullName = UserDataManager.instance.GetFullName();
@@ -166,6 +211,7 @@ public class MainControl_2 : MonoBehaviour
         //设置离心机
         lixinjiUI.SetActive(true);
         lixinjiani.SetBool("close", true);
+        Debug.Log("Puru chalo .......................");
         // ///////////////////////////////////////// show the final result here ...
     }
     public void Alixinbtn()

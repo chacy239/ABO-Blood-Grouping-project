@@ -10,6 +10,8 @@ public class HomeSceneManager : MonoBehaviour
     public InputField id_imp;
     public GameObject errorObj;
 
+    public GameObject timewatch;
+
     private void OnEnable()
     {
         if (GetStudentName() == null || GetStudentName() == "")
@@ -21,7 +23,7 @@ public class HomeSceneManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        timewatch = GameObject.Find("TimeClaculator");
     }
     public void Aload(string name)
     {
@@ -34,7 +36,7 @@ public class HomeSceneManager : MonoBehaviour
             PlayerPrefs.SetString("Name", name_imp.text);
             PlayerPrefs.SetString("Id", id_imp.text);
             Debug.Log("Name : " + name_imp.text + " : ID : " + id_imp.text);
-
+            timewatch.GetComponent<TimeKeeper>().StartTime();
             SceneManager.LoadScene(name);
         }
 

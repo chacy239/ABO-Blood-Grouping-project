@@ -5,14 +5,26 @@ using UnityEngine;
 public class Ningjiaoka : MonoBehaviour
 {
 
+    public string bloodGrp;
+    public string fileNumb;
+    public string studentAns;
+    public Transform bloodGrpImages;
+
+
     private void OnEnable()
     {
-        int index = Random.Range(0, 8);
-        for (int i = 0; i < 8; i++)
+        bloodGrpImages.gameObject.SetActive(true);
+
+        int index = Random.Range(0, bloodGrpImages.childCount);
+        for (int i = 0; i < bloodGrpImages.childCount; i++)
         {
-            gameObject.transform.GetChild(i).gameObject.SetActive(false);
+            bloodGrpImages.GetChild(i).gameObject.SetActive(false);
         }
-        gameObject.transform.GetChild(index).gameObject.SetActive(true);
+        // TODO :: change child enable as per input 
+
+
+        bloodGrpImages.GetChild(index).gameObject.SetActive(true);
+        bloodGrp = bloodGrpImages.GetChild(index).gameObject.name;
     }
     void Start()
     {
@@ -23,5 +35,19 @@ public class Ningjiaoka : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < transform.childCount; i++)  
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        Debug.Log("<color=Blue>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</color>");
+
+        SaveTextExample saveScr = GetComponent<SaveTextExample>();
+        fileNumb = saveScr.input1.text;
+        studentAns = saveScr.input2.text;
     }
 }
