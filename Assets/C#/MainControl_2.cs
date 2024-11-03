@@ -6,27 +6,27 @@ using System.IO;
 
 public class MainControl_2 : MonoBehaviour
 {
-    public Text tiptext;//顶部提示文字
-    private string tipstr;//提示的文字内容
+    public Text tiptext;//顶部提示文字  Top Tip Text
+    private string tipstr;//提示的文字内容 Textual content of the prompt
 
-    public GameObject kedu1;//输入刻度UI1
-    public GameObject kedu2;//输入刻度UI2
-    public GameObject kedu3;//输入刻度UI2
-    public GameObject kedu4;//输入刻度UI2
+    public GameObject kedu1;//输入刻度UI1 Input scale UI1
+    public GameObject kedu2;//输入刻度UI2 Input scale UI2
+    public GameObject kedu3;//输入刻度UI2 Input scale UI3
+    public GameObject kedu4;//输入刻度UI2 输入刻度UI4
 
 
     public GameObject yiyeqi1, yiyeqi2;
 
-    public GameObject lixinjiUI;//离心机设置UI
+    public GameObject lixinjiUI;//离心机设置UI Centrifuge Settings UI
 
-    public Image lixinima;//离心进度条
+    public Image lixinima;//离心进度条 Centrifugal progress bar
     public GameObject shiji1,shiji2,shiji3;
-    public GameObject ningjiaokaUI;//凝胶卡UI
+    public GameObject ningjiaokaUI;//凝胶卡UI Gel Card UI
 
     public Animator lixinjiani;
 
 
-    public GameObject Arrow1, Arrow2, Arrow3, Arrow4, Arrow5, Arrow6, Arrow7;//移液器的提示
+    public GameObject Arrow1, Arrow2, Arrow3, Arrow4, Arrow5, Arrow6, Arrow7;//移液器的提示 Pipette tips
     public TextToggleController textToggleController;
     public Button tutorialModeButton;
     public GameObject TipArea;
@@ -44,13 +44,13 @@ public class MainControl_2 : MonoBehaviour
 
     private int currentStep = 0; // current step
 
-    public GameObject shiguan1,shiguan2,shiguan3,shiguan4;//要抽的4种试管
+    public GameObject shiguan1,shiguan2,shiguan3,shiguan4;//要抽的4种试管 4 types of test tubes to be aspirated 
 
 
-    public GameObject yiyeqi_xitou;//移液器换头动画
-    public GameObject R_tip;//提示按R
+    public GameObject yiyeqi_xitou;//移液器换头动画 Pipette tip change animation
+    public GameObject R_tip;//提示按R R button prompt
 
-    public GameObject shiguanye1,shiguanye2,shiguanye3,shiguanye4;//试管里的液体
+    public GameObject shiguanye1,shiguanye2,shiguanye3,shiguanye4;//试管里的液体  Liquid in a test tube
 
     public GameObject finalResPanel;
     public GameObject fileEntryPanel;
@@ -172,7 +172,7 @@ public class MainControl_2 : MonoBehaviour
 
     public void Akedu1()
     {
-        //输入刻度1
+        //输入刻度1  Input scale 1
         yiyeqi1.GetComponent<Animator>().enabled = true;
         yiyeqi1.GetComponent<BoxCollider>().enabled = false;
         kedu1.SetActive(false);
@@ -181,14 +181,14 @@ public class MainControl_2 : MonoBehaviour
     }
     public void Ashowkedu2()
     {
-        //显示刻度2的模型
+        //显示刻度2的模型 Model showing scale 2
         yiyeqi1.SetActive(false);
         yiyeqi2.SetActive(true);
     }
 
     public void Akedu2()
     {
-        //输入刻度2
+        //输入刻度2  Input scale 2
         yiyeqi2.GetComponent<Animator>().enabled = true;
         yiyeqi2.GetComponent<BoxCollider>().enabled = false;
         kedu2.SetActive(false);
@@ -208,7 +208,7 @@ public class MainControl_2 : MonoBehaviour
     /// </summary>
     public void Alixinji()
     {
-        //设置离心机
+        //设置离心机 Setting up a centrifuge
         lixinjiUI.SetActive(true);
         lixinjiani.SetBool("close", true);
         Debug.Log("Puru chalo .......................");
@@ -217,28 +217,28 @@ public class MainControl_2 : MonoBehaviour
     public void Alixinbtn()
     {
 
-        //操作离心机
+        //操作离心机 Operation of centrifuges
         lixinjiUI.SetActive(false);
         lixinima.transform.parent.gameObject.SetActive(true);
     }
     public void AningjiaokaUI()
     {
-        //显示凝胶卡UI
+        //显示凝胶卡UI  Display Gel Card UI
 
     }
 
     public void Alixinend()
     {
-        //离心结束，取出凝胶卡
+        //离心结束，取出凝胶卡  End of centrifugation, remove gel card
         shiji3.SetActive(true);
     }
 
     public void AArrow1()
     {
-        //显示移液器提示,有用的
+        //显示移液器提示,有用的 Displays pipette tips, helpful
         R_tip.SetActive(true);
 
-        //隐藏第一个凝胶卡动画
+        //隐藏第一个凝胶卡动画  Hide the first gel card animation
         shiji1.SetActive(false);
         shiji2.SetActive(true);
         // yiyeqi1.GetComponent<BoxCollider>().enabled = true;//开启移液器触发器
@@ -250,7 +250,7 @@ public class MainControl_2 : MonoBehaviour
         yiyeqi_xitou.GetComponent<Animator>().enabled = false;
         yiyeqi_xitou.SetActive(false);
 
-        //控制箭头的显示
+        //控制箭头的显示 Controlling the display of arrows
         if (arrownum == 1)
         {
             ATip(5, "Add the patient's red blood cells to the gelcard");
@@ -332,8 +332,8 @@ public class MainControl_2 : MonoBehaviour
     }
     public void Aresxitou()
     {
-        //重新显示需要换头的移液器
-       
+        //重新显示需要换头的移液器 Redisplay pipettes requiring tip change
+
 
 
         if (arrownum == 1)
@@ -361,7 +361,7 @@ public class MainControl_2 : MonoBehaviour
 
     void Update()
     {
-        //按R换头
+        //按R换头  Press R to change tips
         if (Input.GetKeyDown(KeyCode.R) && R_tip.activeInHierarchy&& !yiyeqi_xitou.GetComponent<Animator>().enabled)
         {
             EndStep();
@@ -398,7 +398,7 @@ public class MainControl_2 : MonoBehaviour
 
                 if (hit.collider.gameObject.name == "Shiji")
                 {
-                    //撕开凝胶
+                    //撕开凝胶 Tear off the gel card
                     Arrow4.SetActive(false);
                     textToggleController.tipText.SetActive(false);
                     EndStep();
@@ -409,14 +409,14 @@ public class MainControl_2 : MonoBehaviour
                 }
                 if (hit.collider.gameObject.name == "yiyeqi1")
                 {
-                    //在分液器装好吸头后，先将A型的红细胞试剂加入到gel card前四列，
+                    //在分液器装好吸头后，先将A型的红细胞试剂加入到gel card前四列，After the pipette has been fitted with the tip, the red blood cell reagent, type A, is first added to the first four columns of the gel card.
                     kedu1.SetActive(true);
                     Arrow1.SetActive(false);
                     textToggleController.tipText.SetActive(false);
                 }
                 if (hit.collider.gameObject.name == "yiyeqi2")
                 {
-                    //在A1列（从头在左至右三列）加入A1红细胞试剂（并非之前离心的患者血液试剂
+                    //在A1列（从头在左至右三列）加入A1红细胞试剂（并非之前离心的患者血液试剂 Add the A1 red blood cell reagent (not the patient's blood reagent previously centrifuged) to column A1 (three columns from the top, left to right).
                     kedu2.SetActive(true);
                     Arrow2.SetActive(false);
                     textToggleController.tipText.SetActive(false);
@@ -424,7 +424,7 @@ public class MainControl_2 : MonoBehaviour
                 }
                 if (hit.collider.gameObject.name == "yiyeqi3")
                 {
-                    //在B列（从头在左至右三列）加入B红细胞试剂（并非之前离心的患者血液试剂）
+                    //在B列（从头在左至右三列）加入B红细胞试剂（并非之前离心的患者血液试剂）Add B erythrocyte reagent (not the patient's blood reagent that was previously centrifuged) to column B (three columns from the beginning on the left to the right)
                     kedu2.SetActive(true);
                     Arrow3.SetActive(false);
                     textToggleController.tipText.SetActive(false);
@@ -432,7 +432,7 @@ public class MainControl_2 : MonoBehaviour
 
                 if (hit.collider.gameObject.name == "yiyeqi4")
                 {
-                    //取出患者的血浆悬浮液在右侧两列滴入。
+                    //取出患者的血浆悬浮液在右侧两列滴入。 The plasma suspension of the patient was removed and dropped in two columns on the right side.
                     kedu2.SetActive(true);
                     Arrow4.SetActive(false);
                     textToggleController.tipText.SetActive(false);
@@ -441,7 +441,7 @@ public class MainControl_2 : MonoBehaviour
 
                 if (hit.collider.gameObject.name == "Shiji2")
                 {
-                    //放置凝胶到离心机
+                    //放置凝胶到离心机 Place the gel into the centrifuge
                     Arrow3.SetActive(false);
                     textToggleController.tipText.SetActive(false);
                     EndStep();
@@ -451,7 +451,7 @@ public class MainControl_2 : MonoBehaviour
                 }
                 if (hit.collider.gameObject.name == "Shiji3")
                 {
-                    //显示凝胶卡结果
+                    //显示凝胶卡结果 Displaying Gel Card Results
                     ningjiaokaUI.SetActive(true);
                     gameObject.GetComponent<RigibodyMove>().enabled = false;
                     gameObject.GetComponent<MouseLook1>().enabled = false;
@@ -459,7 +459,7 @@ public class MainControl_2 : MonoBehaviour
 
 
 
-                //4个流程
+                //4个流程 4 Processes
                 if (hit.collider.gameObject.name == "shiguan1")
                 {
                     kedu1.SetActive(true);

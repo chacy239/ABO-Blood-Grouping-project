@@ -112,7 +112,7 @@ public class MainControl_1 : MonoBehaviour
 
     public void ACentrifugation()
     {
-        //离心机
+        //离心机 centrifugal (machine)
         HideAllButtons();
         Tube1.GetComponent<Animator>().enabled = false;
         textToggleController1.tipText.SetActive(false);
